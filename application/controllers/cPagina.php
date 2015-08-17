@@ -13,9 +13,30 @@ class cPagina extends CI_Controller {
     }
     
     public function index() {
+        $userId = $this->session->userdata('userId');
         $dados = array(
             'titulo' => 'Remember Redis',
             'tela' => 'pagina',
+            'tarefas' => $this->mItem->pegarTodasTarefas($userId),
+            'alarmes' => $this->mItem->pegarTodosAlarmes($userId),
+        );
+
+        $this->load->view('sistema', $dados);
+    }
+    
+    public function novaTarefa() {
+        $dados = array(
+            'titulo' => 'Remember Redis',
+            'tela' => 'novaTarefa',
+        );
+
+        $this->load->view('sistema', $dados);
+    }
+    
+    public function novoAlarme() {
+        $dados = array(
+            'titulo' => 'Remember Redis',
+            'tela' => 'novoAlarme',
         );
 
         $this->load->view('sistema', $dados);
@@ -30,7 +51,19 @@ class cPagina extends CI_Controller {
     public function inserirAlarme() {
             $userId = $this->session->userdata('userId');            
             $dados = elements(array('aData', 'aHora'), $this->input->post());            
-            $this->mItem->inserirTarefa($dados, $userId);
+            $this->mItem->inserirAlarme($dados, $userId);
+    }
+    
+    public function deletarTarefa(){
+        $id = $this->uri->segment(3);
+        $userId = $this->session->userdata('userId');
+        $this->mItem->deletarTarefa($id, $userId);
+    }
+    
+    public function deletarAlarme(){
+        $id = $this->uri->segment(3);
+        $userId = $this->session->userdata('userId');
+        $this->mItem->deletarAlarme($id, $userId);
     }
 
 }

@@ -13,7 +13,7 @@ class mUsuario extends CI_Model {
         $this->redis->client->hset("usuarios", $login, $userId);
         //grava os dados do usuario numa hash
         $this->redis->client->hmset("user:$userId", "login", $login, "senha", $senha);
-        redirect('index.php');
+        redirect('principal');
     }
 
     public function deletarUsuarioPeloLogin($login) {

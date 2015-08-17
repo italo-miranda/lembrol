@@ -1,28 +1,62 @@
 <div id="paginaInicial" class="container-fluid">
-    <div class="row-fluid span10">
-        <div id='cadastroTarefa' class="row-fluid">
-            <?php echo form_open('cPagina/inserirTarefa', array('id' => 'form')); ?>
-            <div id="cadastro" class="span5">
-                <div id="titulo" class="row-fluid">
-                    <fieldset>Titulo</fieldset>
-                    <input type="text" name='tTitulo'>
-                </div>
-                <div id="data" class="row-fluid">
-                    <fieldset>Data</fieldset>
-                    <input type="date" name='tData'>
-                </div>
-                <div id="hora" class="row-fluid">
-                    <fieldset>Hora</fieldset>
-                    <input type="time" name='tHora'>
-                </div>
-                <div id="descricao" class="row-fluid">
-                    <fieldset>Descrição</fieldset>
-                    <input type="textarea" name='tDescricao'>
-                </div>
-                <div class="row-fluid"><button type="submit" class="btn-primary">Cadastrar</button></div>
+    <div class="row-fluid">
+        <div class="offset2"><?php echo anchor('cPagina/novaTarefa', 'Nova tarefa') ?></div>
+        <div class="offset2"><?php echo anchor('cPagina/novoAlarme', 'Novo alarme') ?></div>
+    </div>    
+    <div class="span2 tarefas coisas">
 
-                <?php echo form_close() ?>            
-            </div>
-        </div>
+        <?php
+        echo form_open();
+        foreach ($tarefas as $key):
+            echo '<div class="row-fluid">';
+            echo form_label('Título');
+            echo $key->titulo;
+            echo '</div>';
+
+            echo '<div class="row-fluid">';
+            echo form_label('Data');
+            echo $key->data;
+            echo '</div>';
+
+            echo '<div class="row-fluid">';
+            echo form_label('Hora');
+            echo $key->hora;
+            echo '</div>';
+
+            echo '<div class="row-fluid">';
+            echo form_label('Descrição');
+            echo $key->descricao;
+            echo '</div>';
+            
+            echo form_button(array('type' => 'submit', 'name' => 'excluir', 'class' => 'btn btn-danger', 'formaction' => "cPagina/deletarTarefa/$key->tarefaId"), 'Excluir tarefa');
+        endforeach;
+        echo form_close();
+        ?>
+
     </div>
+
+    <div class="span2 tarefas coisas">
+        <?php
+        echo form_open();
+        foreach ($alarmes as $key):
+            echo '<div class="row-fluid">';
+            echo form_label('Alarme');
+            echo '</div>';
+
+            echo '<div class="row-fluid">';
+            echo form_label('Data');
+            echo $key->data;
+            echo '</div>';
+
+            echo '<div class="row-fluid">';
+            echo form_label('Hora');
+            echo $key->hora;
+            echo '</div>';
+            
+            echo form_button(array('type' => 'submit', 'name' => 'excluir', 'class' => 'btn btn-danger', 'formaction' => "cPagina/deletarAlarme/$key->alarmeId"), 'Excluir alarme');
+        endforeach;
+        echo form_close();
+        ?>
+    </div>
+
 </div>
